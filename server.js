@@ -21,7 +21,7 @@ var adalConfig = {
 
     'authorityHostUrl': 'https://login.microsoftonline.com/', // The host URL for the Microsoft authorization server
     'tenant': 'microexcel1.onmicrosoft.com', // The tenant Id or domain name (e.g mydomain.onmicrosoft.com)
-    'redirectUri': 'http://e3a97e07.ngrok.io/api/oauthcallback', // This URL will be used for the Azure AD Application to send the authorization code.
+    'redirectUri': 'https://mebot.azurewebsites.net/api/oauthcallback', // This URL will be used for the Azure AD Application to send the authorization code.
     'resource': 'https://microexcel1.sharepoint.com/', // The resource endpoint we want to give access to (in this case, SharePoint Online)
 }
 
