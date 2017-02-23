@@ -497,7 +497,7 @@ bot.dialog('/SearchKeyword', [
 
                             // create reply with Carousel AttachmentLayout
                             var reply = new builder.Message(session)
-                                .attachmentLayout(builder.AttachmentLayout.list)
+                                .attachmentLayout(builder.AttachmentLayout.carousel)
                                 .attachments(cards);
 
                             console.log(reply);
