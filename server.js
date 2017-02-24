@@ -10,14 +10,14 @@ var _ = require('lodash');
 //=========================================================
 
 var adalConfig = {
-    'clientId': 'ed1ec578-9603-44d9-8bfc-f37ee6520575', // The client Id retrieved from the Azure AD App      
-    //  'clientId': '29c53d85-706a-4072-b002-5784c0cad04d', // The client Id retrieved from the Azure AD App  //Justin 
-    'clientSecret': 'LcCPpb7YkzOoEzvhT7jGOGg3M98BMrY/s7mt4+0WqWU=', // The client secret retrieved from the Azure AD App      
-   //'clientSecret': 'z7rSXVxaiVuaEZQqy1xbrv2Ev5xCQTlMffUh/VXwjmQ=', // The client secret retrieved from the Azure AD App //Justin
+    //'clientId': 'ed1ec578-9603-44d9-8bfc-f37ee6520575', // The client Id retrieved from the Azure AD App      
+      'clientId': '29c53d85-706a-4072-b002-5784c0cad04d', // The client Id retrieved from the Azure AD App  //Justin 
+   // 'clientSecret': 'LcCPpb7YkzOoEzvhT7jGOGg3M98BMrY/s7mt4+0WqWU=', // The client secret retrieved from the Azure AD App      
+   'clientSecret': 'z7rSXVxaiVuaEZQqy1xbrv2Ev5xCQTlMffUh/VXwjmQ=', // The client secret retrieved from the Azure AD App //Justin
 
     'authorityHostUrl': 'https://login.microsoftonline.com/', // The host URL for the Microsoft authorization server
     'tenant': 'microexcel1.onmicrosoft.com', // The tenant Id or domain name (e.g mydomain.onmicrosoft.com)
-    'redirectUri': 'http://e3a97e07.ngrok.io/api/oauthcallback', // This URL will be used for the Azure AD Application to send the authorization code.
+    'redirectUri': 'https://mebot.azurewebsites.net/api/oauthcallback', // This URL will be used for the Azure AD Application to send the authorization code.
     'resource': 'https://microexcel1.sharepoint.com/', // The resource endpoint we want to give access to (in this case, SharePoint Online)
 }
 
