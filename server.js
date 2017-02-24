@@ -49,7 +49,8 @@ var bot = new builder.UniversalBot(connector);
 // LUIS connection
 //=========================================================
 
-var model = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/f5dc3c66-2733-45b9-8517-517bc4ba37da?subscription-key=c574d5df298e4c4cb5ad031aac289c0b&verbose=true';
+//var model = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/f5dc3c66-2733-45b9-8517-517bc4ba37da?subscription-key=c574d5df298e4c4cb5ad031aac289c0b&verbose=true';
+var model = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/a79b8840-2241-44e6-8333-e878cf04b455?subscription-key=c3a8ea93974848759e7035a9e7af5926&verbose=true';
 var recognizer = new builder.LuisRecognizer(model);
 var dialog = new builder.IntentDialog({ recognizers: [recognizer] });
 
@@ -189,13 +190,13 @@ bot.dialog('/', dialog);
 
 
 // Add intent handlers
-dialog.matches('SearchIntents', [
+dialog.matches('SearchIdea', [
 
    
     function (session, args, next) {    
         // Resolve and store any entities passed from LUIS.
-        var keywordEntity = builder.EntityRecognizer.findEntity(args.entities, 'keywords');
-        var siteEntity = builder.EntityRecognizer.findEntity(args.entities, 'siteNameEntity');
+        var keywordEntity = builder.EntityRecognizer.findEntity(args.entities, 'IdeaName');
+        var siteEntity = builder.EntityRecognizer.findEntity(args.entities, 'Brands');
         if(siteEntity)
         {
             session.privateConversationData['siteName'] = siteEntity.entity;
