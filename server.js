@@ -238,7 +238,8 @@ dialog.matches('ResetIntent', [
     function (session, args, next) {    
         session.privateConversationData = {};
         session.send('Resetting......');
-        dialog.onDefault(getAuthorization);
+        session.privateConversationData['accessToken']= '';
+       getAuthorization;
     },
     
     
