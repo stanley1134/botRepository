@@ -10,10 +10,14 @@ var _ = require('lodash');
 //=========================================================
 
 var adalConfig = {
-    //'clientId': 'ed1ec578-9603-44d9-8bfc-f37ee6520575', // The client Id retrieved from the Azure AD App      
-      'clientId': '29c53d85-706a-4072-b002-5784c0cad04d', // The client Id retrieved from the Azure AD App  //Justin 
-   // 'clientSecret': 'LcCPpb7YkzOoEzvhT7jGOGg3M98BMrY/s7mt4+0WqWU=', // The client secret retrieved from the Azure AD App      
-   'clientSecret': 'z7rSXVxaiVuaEZQqy1xbrv2Ev5xCQTlMffUh/VXwjmQ=', // The client secret retrieved from the Azure AD App //Justin
+   // 'clientId': 'ed1ec578-9603-44d9-8bfc-f37ee6520575', // The client Id retrieved from the Azure AD App
+      //Justin
+      'clientId': '29c53d85-706a-4072-b002-5784c0cad04d', // The client Id retrieved from the Azure AD App
+
+   // 'clientSecret': 'LcCPpb7YkzOoEzvhT7jGOGg3M98BMrY/s7mt4+0WqWU=', // The client secret retrieved from the Azure AD App
+      //Justin
+      'clientSecret': 'z7rSXVxaiVuaEZQqy1xbrv2Ev5xCQTlMffUh/VXwjmQ=', // The client secret retrieved from the Azure AD App
+
 
     'authorityHostUrl': 'https://login.microsoftonline.com/', // The host URL for the Microsoft authorization server
     'tenant': 'microexcel1.onmicrosoft.com', // The tenant Id or domain name (e.g mydomain.onmicrosoft.com)
@@ -45,9 +49,7 @@ var bot = new builder.UniversalBot(connector);
 // LUIS connection
 //=========================================================
 
-//var model = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/f5dc3c66-2733-45b9-8517-517bc4ba37da?subscription-key=c574d5df298e4c4cb5ad031aac289c0b&verbose=true';
-var model = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/a79b8840-2241-44e6-8333-e878cf04b455?subscription-key=c3a8ea93974848759e7035a9e7af5926&verbose=true';
-
+var model = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/f5dc3c66-2733-45b9-8517-517bc4ba37da?subscription-key=c574d5df298e4c4cb5ad031aac289c0b&verbose=true';
 var recognizer = new builder.LuisRecognizer(model);
 var dialog = new builder.IntentDialog({ recognizers: [recognizer] });
 
@@ -187,13 +189,13 @@ bot.dialog('/', dialog);
 
 
 // Add intent handlers
-dialog.matches('SearchIdea', [
+dialog.matches('SearchIntents', [
 
    
     function (session, args, next) {    
         // Resolve and store any entities passed from LUIS.
-        var keywordEntity = builder.EntityRecognizer.findEntity(args.entities, 'IdeaName');
-        var siteEntity = builder.EntityRecognizer.findEntity(args.entities, 'Brands');
+        var keywordEntity = builder.EntityRecognizer.findEntity(args.entities, 'keywords');
+        var siteEntity = builder.EntityRecognizer.findEntity(args.entities, 'siteNameEntity');
         if(siteEntity)
         {
             session.privateConversationData['siteName'] = siteEntity.entity;
