@@ -236,12 +236,13 @@ dialog.matches('ResetIntent', [
 
    
     function (session, args, next) {    
-        session.privateConversationData = {};
-        session.send('Resetting......');
-        session.privateConversationData['accessToken']= '';
-       getAuthorization;
-       session.send('Reset Completed');
-    },
+         
+         session.send("resetting .......");
+            session.privateConversationData = {};
+                // Get back to the main dialog route and prompt for a sign in
+                session.beginDialog("/");
+                
+    }
     
     
 ]);
