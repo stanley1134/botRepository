@@ -188,7 +188,18 @@ var getAuthorization = (session, args, next) => {
 
 bot.dialog('/', dialog);
 
-
+dialog.matches('ResetIntent', [
+   
+    function (session, args, next) {    
+         
+         session.send("resetting .......");
+         session.privateConversationData = {}; 
+         bot.dialog('/getAuthorization');                
+         session.beginDialog("/"); 
+                     
+    }    
+    
+]);
 // Add intent handlers
 dialog.matches('SearchIdea', [
 
@@ -232,20 +243,7 @@ dialog.matches('SearchIdea', [
 
     }
 ]);
-dialog.matches('ResetIntent', [
 
-   
-    function (session, args, next) {    
-         
-         session.send("resetting .......");
-            session.privateConversationData = {};
-                // Get back to the main dialog route and prompt for a sign in
-                session.beginDialog("/");
-                
-    }
-    
-    
-]);
 
 dialog.matches('GlobalIntents', [
 
