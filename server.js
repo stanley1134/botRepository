@@ -188,18 +188,6 @@ var getAuthorization = (session, args, next) => {
 
 bot.dialog('/', dialog);
 
-dialog.matches('ResetIntent', [
-   
-    function (session, args, next) {    
-         
-         session.send("resetting .......");
-         session.privateConversationData = {}; 
-         bot.dialog('/getAuthorization');                
-         session.beginDialog("/"); 
-                     
-    }    
-    
-]);
 // Add intent handlers
 dialog.matches('SearchIdea', [
 
