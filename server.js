@@ -231,6 +231,15 @@ dialog.matches('SearchIntents', [
 
     }
 ]);
+dialog.matches('ResetIntent', [
+
+   
+    function (session, args, next) {    
+        getAuthorization();
+    },
+    
+    
+]);
 
 dialog.matches('GlobalIntents', [
 
