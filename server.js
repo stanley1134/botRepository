@@ -236,6 +236,7 @@ dialog.matches('ResetIntent', [
 
    
     function (session, args, next) {    
+        session.privateConversationData = {};
         getAuthorization;
     },
     
