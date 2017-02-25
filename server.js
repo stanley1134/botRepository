@@ -10,18 +10,16 @@ var _ = require('lodash');
 //=========================================================
 
 var adalConfig = {
-   // 'clientId': 'ed1ec578-9603-44d9-8bfc-f37ee6520575', // The client Id retrieved from the Azure AD App
-      //Justin
-      'clientId': '29c53d85-706a-4072-b002-5784c0cad04d', // The client Id retrieved from the Azure AD App
-
-   // 'clientSecret': 'LcCPpb7YkzOoEzvhT7jGOGg3M98BMrY/s7mt4+0WqWU=', // The client secret retrieved from the Azure AD App
-      //Justin
-      'clientSecret': 'z7rSXVxaiVuaEZQqy1xbrv2Ev5xCQTlMffUh/VXwjmQ=', // The client secret retrieved from the Azure AD App
-
+    //'clientId': 'ed1ec578-9603-44d9-8bfc-f37ee6520575', // The client Id retrieved from the Azure AD App      
+      'clientId': '29c53d85-706a-4072-b002-5784c0cad04d', // The client Id retrieved from the Azure AD App  //Justin 
+    //'clientSecret': 'LcCPpb7YkzOoEzvhT7jGOGg3M98BMrY/s7mt4+0WqWU=', // The client secret retrieved from the Azure AD App      
+   'clientSecret': 'z7rSXVxaiVuaEZQqy1xbrv2Ev5xCQTlMffUh/VXwjmQ=', // The client secret retrieved from the Azure AD App //Justin
 
     'authorityHostUrl': 'https://login.microsoftonline.com/', // The host URL for the Microsoft authorization server
     'tenant': 'microexcel1.onmicrosoft.com', // The tenant Id or domain name (e.g mydomain.onmicrosoft.com)
+    
     'redirectUri': 'https://mebot.azurewebsites.net/api/oauthcallback', // This URL will be used for the Azure AD Application to send the authorization code.
+    //'redirectUri': 'http://6ab6e52b.ngrok.io/api/oauthcallback', // This URL will be used for the Azure AD Application to send the authorization code.
     'resource': 'https://microexcel1.sharepoint.com/', // The resource endpoint we want to give access to (in this case, SharePoint Online)
 }
 
@@ -49,10 +47,11 @@ var bot = new builder.UniversalBot(connector);
 // LUIS connection
 //=========================================================
 
-//var model = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/f5dc3c66-2733-45b9-8517-517bc4ba37da?subscription-key=c574d5df298e4c4cb5ad031aac289c0b&verbose=true';
-var model = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/a79b8840-2241-44e6-8333-e878cf04b455?subscription-key=c3a8ea93974848759e7035a9e7af5926&verbose=true';
+//var model = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/92fe158d-3fb7-420a-8a85-f7c9508b7f93?subscription-key=c574d5df298e4c4cb5ad031aac289c0b&verbose=true';
+var model = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/a79b8840-2241-44e6-8333-e878cf04b455?subscription-key=c3a8ea93974848759e7035a9e7af5926&verbose=true'; //Justin
+
 var recognizer = new builder.LuisRecognizer(model);
-var dialog = new builder.IntentDialog({ recognizers: [recognizer] });
+var intentDialog = new builder.IntentDialog({ recognizers: [recognizer] });
 
 
 //=========================================================
@@ -121,6 +120,13 @@ server.post('/api/oauthcallback', (req, res, next) => {
 //=========================================================
 var getAuthorization = (session, args, next) => {
 
+   if (session.message.text === "reset") {
+                session.privateConversationData = {};
+                
+                
+
+   }
+    
     // User is not already signed-in
     if (!session.privateConversationData['accessToken']) {
 
@@ -180,19 +186,20 @@ var getAuthorization = (session, args, next) => {
             next();
         }
     }
+    
 }
 
 //=========================================================
 // Bot Dialogs Starts
 //=========================================================
 
-bot.dialog('/', dialog);
+bot.dialog('/',intentDialog);
 
 // Add intent handlers
-dialog.matches('SearchIdea', [
-
+intentDialog.matches('SearchIdea', [
    
     function (session, args, next) {    
+        
         // Resolve and store any entities passed from LUIS.
         var keywordEntity = builder.EntityRecognizer.findEntity(args.entities, 'IdeaName');
         var siteEntity = builder.EntityRecognizer.findEntity(args.entities, 'Brands');
@@ -232,8 +239,7 @@ dialog.matches('SearchIdea', [
     }
 ]);
 
-
-dialog.matches('GlobalIntents', [
+intentDialog.matches('GlobalIntents', [
 
    
     function (session, args, next) {    
@@ -255,7 +261,7 @@ dialog.matches('GlobalIntents', [
     }
 ]);
 
-dialog.onDefault(getAuthorization);
+intentDialog.onDefault(getAuthorization);
 
 
 //=========================================================
@@ -467,7 +473,8 @@ bot.dialog('/SearchKeyword', [
         var accessToken = session.privateConversationData['accessToken'];
         var siteName = session.privateConversationData['siteName'];
 
-
+        if(accessToken)
+        {
                 // Now we have the token so we can make authenticated REST all to SharePoint or Graph API endpoints.        
                 doSearch(keywords, accessToken,siteName).then((res) => {
 
@@ -517,8 +524,15 @@ bot.dialog('/SearchKeyword', [
                 });
 
 
-
+        
     }
+    else
+    {
+        session.send("Token Expired ....Type 'reset' and login"); 
+        session.beginDialog("/");   
+    }
+}
+
 ]);
 
 
