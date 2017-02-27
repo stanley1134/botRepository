@@ -205,11 +205,11 @@ intentDialog.matches('SearchIdea', [
         var siteEntity = builder.EntityRecognizer.findEntity(args.entities, 'Brands');
         if(siteEntity)
         {
-            session.privateConversationData['siteName'] = siteEntity.entity;
+            session.privateConversationData['siteName'] = 'productdevelopment';
         }
         else
         {
-          session.privateConversationData['siteName'] = '';              
+          session.privateConversationData['siteName'] = 'productdevelopment';              
         }
         
         // Prompt for title
